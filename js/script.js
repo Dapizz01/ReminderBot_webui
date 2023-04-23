@@ -7,8 +7,13 @@ mainButton.show();
 
 mainButton.onClick(() => {
     if(timeInput.value != null){
+        let time_offset = 0
+        let times = timeInput.value.split(":")
+
+        time_offset = times[0] * 60 + times[1]
+
         window.Telegram.WebApp.sendData(JSON.stringify({
-            "time": timeInput.value,
+            "time": time_offset,
             "desc": descInput.value
         }))
     }
