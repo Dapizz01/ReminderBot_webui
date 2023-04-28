@@ -5,8 +5,8 @@ import './App.css'
 
 function App() {
   const [selectedTab, setSelectedTab] = React.useState(0)
-  const [time, setTime] = React.useState()
-  const [date, setDate] = React.useState()
+  const [time, setTime] = React.useState(0)
+  const [date, setDate] = React.useState(0)
   const [message, setMessage] = React.useState("")
 
   const mainButton = window.Telegram.WebApp.MainButton
@@ -18,17 +18,16 @@ function App() {
     if(selectedTab == 0){ // Time
       if(time != null){
         let times = time.split(":")
-        let seconds = times[0] * 3600 + times[1] * 60
 
         window.Telegram.WebApp.sendData(JSON.stringify({
           "type": "time",
-          "input": seconds,
-          "message": message
+          "hours": int(times[0]),
+          "minutes": int(times[1]),
+          "message": document.getElementById("note").value // yeah, not really the best...
         }))
       }
     }
     else{ // Date
-      // TODO
     }
   })
 
@@ -55,8 +54,8 @@ function App() {
 
         <input type="text" placeholder="Reminder note (optional)" 
           className="input input-bordered w-full max-w-xs" 
+          id="note"
           onChange={(e) => {
-            e.preventDefault()
             setMessage(e.target.value)
           }}/>
       </div>
