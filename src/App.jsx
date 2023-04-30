@@ -5,8 +5,8 @@ import './App.css'
 
 function App() {
   const [selectedTab, setSelectedTab] = React.useState(0)
-  const [time, setTime] = React.useState(0)
-  const [date, setDate] = React.useState(0)
+  const [time, setTime] = React.useState()
+  const [date, setDate] = React.useState()
   const [message, setMessage] = React.useState("")
 
   const mainButton = window.Telegram.WebApp.MainButton
@@ -28,6 +28,20 @@ function App() {
       }
     }
     else{ // Date
+
+      let curr_date = document.getElementById("datetime").valueAsDate
+
+      if(curr_date != null){
+        window.Telegram.WebApp.sendData(JSON.stringify({
+          "type": "date",
+          "year": curr_date.getFullYear(),
+          "month": curr_date.getMonth() + 1,
+          "day": curr_date.getDate(),
+          "hours": curr_date.getHours(),
+          "minutes": curr_date.getMinutes(),
+          "message": document.getElementById("note").value
+        }))
+      }
     }
   })
 
